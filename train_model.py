@@ -1,7 +1,7 @@
 import os
 import numpy as np
 import tensorflow as tf
-from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.preprocessing.image import load_img, img_to_array
 from tensorflow.keras.applications import VGG16
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Flatten, Dropout
@@ -15,16 +15,6 @@ image_size = (256, 256)
 # Set the batch size and number of epochs
 batch_size = 32
 num_epochs = 10
-
-# Use data augmentation for training set
-train_datagen = ImageDataGenerator(rescale=1./255,
-                                   rotation_range=10,
-                                   width_shift_range=0.1,
-                                   height_shift_range=0.1,
-                                   shear_range=0.1,
-                                   zoom_range=0.1,
-                                   horizontal_flip=True,
-                                   validation_split=0.2)
 
 # Load the pre-trained VGG16 model without the top layers
 base_model = VGG16(weights='imagenet',
@@ -48,29 +38,29 @@ model.compile(optimizer='adam',
               loss='binary_crossentropy',
               metrics=['accuracy'])
 
-# Prepare the training and validation data
-train_generator = train_datagen.flow_from_directory(dataset_dir,
-                                                    target_size=image_size,
-                                                    batch_size=batch_size,
-                                                    class_mode='binary',
-                                                    subset='training',
-                                                    shuffle=True,
-                                                    follow_links=True)
+# Prepare the data
+filepaths = []
+labels = []
 
-validation_generator = train_datagen.flow_from_directory(dataset_dir,
-                                                         target_size=image_size,
-                                                         batch_size=batch_size,
-                                                         class_mode='binary',
-                                                         subset='validation',
-                                                         shuffle=True,
-                                                         follow_links=True)
+for root, dirs, files in os.walk(dataset_dir):
+    for file in files:
+        filepaths.append(os.path.join(root, file))
+        labels.append(0)  # Assign a label, or modify this based on your needs
+
+num_samples = len(filepaths)
+x_train = np.zeros((num_samples, image_size[0], image_size[1], 3), dtype=np.float32)
+y_train = np.array(labels)
+
+for i, filepath in enumerate(filepaths):
+    img = load_img(filepath, target_size=image_size)
+    img_array = img_to_array(img)
+    x_train[i] = img_array
+
+# Normalize the pixel values
+x_train /= 255.0
 
 # Train the model
-model.fit(train_generator,
-          steps_per_epoch=train_generator.samples // batch_size,
-          epochs=num_epochs,
-          validation_data=validation_generator,
-          validation_steps=validation_generator.samples // batch_size)
+model.fit(x_train, y_train, batch_size=batch_size, epochs=num_epochs)
 
 # Save the trained model
 model.save('face_swap_model.h5')
