@@ -62,7 +62,7 @@ Face Warping:
 Use the extracted facial features and landmarks to warp the source face, aligning it with the corresponding positions on the target face. This step ensures that the swapped face fits naturally into the target image.
 
 Blending:
-Blend the warped source face into the target image, taking into account lighting, shadows, and texture. Employ blending techniques, such as Poisson blending or alpha blending, to ensure a seamless integration.
+Integrate the distorted source face into the target image, considering factors like lighting, shadows, and texture. Utilize blending methods like Poisson blending or alpha blending to achieve a smooth and cohesive merging.
 
 Post-processing:
 Apply any necessary adjustments or enhancements to the final swapped image, such as color correction or noise reduction.
