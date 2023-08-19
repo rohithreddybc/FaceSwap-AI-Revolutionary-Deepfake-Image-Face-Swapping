@@ -38,7 +38,10 @@ model.compile(optimizer='adam',
               loss='binary_crossentropy',
               metrics=['accuracy'])
 
-# Prepare the data
+# Prepare the data by collecting file paths and labels for images in a directory.
+# This code snippet iterates through the directory and its subdirectories to gather
+# file paths of images. It also assigns placeholder labels to these images, which
+# can be later modified based on your specific classification needs.
 filepaths = []
 labels = []
 
