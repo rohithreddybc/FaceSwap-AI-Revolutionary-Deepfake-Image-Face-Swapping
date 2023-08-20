@@ -64,8 +64,8 @@ Use the extracted facial features and landmarks to warp the source face, alignin
 Blending:
 Integrate the distorted source face into the target image, considering factors like lighting, shadows, and texture. Utilize blending methods like Poisson blending or alpha blending to achieve a smooth and cohesive merging.
 
-Post-processing:
-Apply any necessary adjustments or enhancements to the final swapped image, such as color correction or noise reduction.
+Image resolution check: 
+Ensure that the resolution of the swapped image is appropriate for its intended use, avoiding any loss of quality.
 
 Please note that implementing a complete deepfake project involves advanced knowledge of deep learning frameworks (e.g., TensorFlow, PyTorch) and computer vision libraries (e.g., OpenCV). Additionally, it is essential to follow legal and ethical guidelines when working with deepfake technology to avoid misuse or potential harm.
 
