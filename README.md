@@ -41,7 +41,7 @@ Marketers and advertisers can leverage the power of FaceSwap AI to personalize a
 **High-level overview of the steps involved in creating a face swap using deep learning:**
 
 Data Collection:
-Gather a dataset of images containing faces, including both source and target faces. Ensure that the dataset is diverse and representative of the faces you want to swap.
+Gather a dataset of images containing faces, including both source and target faces. Ensure that the dataset is diverse and representative of the faces you want to swap. Apply data augmentation techniques to the collected images to increase the variability of facial expressions, lighting conditions, and poses in the dataset.
 
 Preprocessing:
 Preprocess the images by aligning and normalizing the faces. Use facial landmark detection algorithms to locate key facial points and align them across images. Normalize the images to a consistent size and color space.
